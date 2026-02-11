@@ -13,3 +13,7 @@ CMD ["npm", "run", "build"]
 FROM nginx
 
 COPY --from=builder /app/build /usr/share/nginx/html
+
+# Cloud Run injects a PORT env var, but Nginx usually uses a static config.
+# This line tells Nginx to listen on the port Cloud Run expects.
+CMD ["nginx", "-g", "daemon off;"]
